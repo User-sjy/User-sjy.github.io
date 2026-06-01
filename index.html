@@ -176,6 +176,7 @@
         </main>
     </div>
     <script>
+        alert("你好，我叫孙靖衍！很高兴您能访问我的网站，现在是xingheng.1.0.00 alpha版本，开始刷题吧！");
         document.addEventListener('DOMContentLoaded', function() {
             const menuItems = document.querySelectorAll('#sidebarMenu a');
             const currentPath = window.location.pathname;
@@ -187,19 +188,26 @@
                 }
             });
         });
-        const QJ={
-            "P1001":"P1001.html","p1001":"P1001.html","P1000":"P1000.html","p1000":"P1000.html",
-            "G1100":"G1100.html","g1100":"G1100.html","P1002":"P1002.html","G1101":"G1101.html",
-            "g1101":"G1101.html","G1102":"G1102.html","g1102":"G1102.html","G2100":"G2100.html",
-            "g2100":"G2100.html","G2101":"G2101.html","g2101":"G2101.html","G2102":"G2102.html",
-            "g2102":"G2102.html","G4100":"G4100.html","g4100":"G4100.html","G3100":"G3100.html",
-            "g3100":"G3100.html","G3101":"G3101.html","g3101":"G3101.html","G3102":"G3102.html",
-            "g3102":"G3102.html","P1003":"P1003.html","p1003":"P1003.html","P1004":"P1004.html",
-            "p1004":"P1004.html","P1005":"P1005.html","p1005":"P1005.html","P1006":"P1006.html",
-            "p1006":"P1006.html","P1007":"P1007.html","p1007":"P1007.html","P1008":"P1008.html",
-            "p1008":"P1008.html"
-        };
-        const EQI=Object.keys(QJ);
+        const problems=[
+            "P1000","P1001","P1002","P1003","P1004","P1005","P1006","P1007","P1008",
+            "P1009","P1010","P1011","P1012","P1013","P1014","P1015","P1016","P1017",
+            "P1018","P1019","P1020","P1021","P1022","P1023","P1024","P1025","P1026",
+            "P1027","P1028","P1029",
+            "G1100","G1101","G1102",
+            "G2100","G2101","G2102",
+            "G3100","G3101","G3102",
+            "G4100"
+        ];
+        const QJ={};
+        problems.forEach(p=>{
+            QJ[p]=p+".html";
+            QJ[p.toLowerCase()]=p+".html";
+        });
+        const EQI = [];
+        problems.forEach(pid=>{
+            EQI.push(pid);
+            EQI.push(pid.toLowerCase());
+        });
         const statusDisplay = document.getElementById("statusDisplay");
         function resetStatus() {
             statusDisplay.className = "status-display";
