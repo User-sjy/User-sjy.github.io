@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>P1000 小明的积分</title>
+<title>P1001 简易计算器</title>
 <style>
     body{
         max-width: 800px;
@@ -85,12 +85,13 @@
 </style>
 </head>
 <body>
-<h1>P1000 小明的积分</h1>
+<h1>P1001 简易计算器</h1>
 <div class="card">
 <textarea id="code" placeholder="输入C++代码..."></textarea>
 <div class="case-area">
-<div class="row"><span>用例1:</span> <div class="case-value">输入：10,10,10,10,10,10,10,10,10,10,10...</div> <div class="case-value">预期输出：1694851393</div></div>
-<div class="row"><span>用例2:</span> <div class="case-value">输入：10,100,100,100,100,100,100,100,100,100,100...</div> <div class="case-value">预期输出：1452729852</div></div>
+<div class="row"><span>用例1:</span> <div class="case-value">输入：9000000000000000000 + 9000000000000000000</div> <div class="case-value">预期输出：18000000000000000000</div></div>
+<div class="row"><span>用例2:</span> <div class="case-value">输入：18446744073709551615 - 1</div> <div class="case-value">预期输出：18446744073709551614</div></div>
+<div class="row"><span>用例3:</span> <div class="case-value">输入：18446744073709551615 / 2</div> <div class="case-value">预期输出：9223372036854775807</div></div>
 </div>
 <button id="runBtn" onclick="judge()">开始判题</button>
 <div id="result"></div>
@@ -99,8 +100,9 @@
 <script>
 const API_URL = "https://wandbox.org/api/compile.json";
 const FIXED_TEST_CASES = [
-    { input: "10 2 5 1 1 1 3 4 2", expect: "9 7 9" },
-    { input: "11 2 5 1 1 1 3 4 2", expect: "9 7 9" }
+    { input: "9000000000000000000 + 9000000000000000000", expect: "18000000000000000000" },
+    { input: "18446744073709551615 - 1", expect: "18446744073709551614" },
+    { input: "18446744073709551615 / 2", expect: "9223372036854775807" }
 ];
 const OJ_STATUS = {
     AC: { code: "AC", name: "通过" }, WA: { code: "WA", name: "答案错误" },
