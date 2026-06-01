@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星珩</title>
+    <style>
+    .P1000{
+        color:#3f3c3c;
+    }
+    h1{
+        margin: 0;
+        font-size: 35px;
+        padding-right: 20px; 
+    }
+    .button-2{
+        border: 2px solid #fc5959;
+        background-color: #fc5959;
+        width: 50px;
+        height: 35px;
+        color:white;
+        border-radius: 8px;
+    }
+    .useful-box-1{
+        border: 1px solid #007bff;
+        width: 150px;
+        height: auto;
+        padding: 8px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-sizing: border-box;
+        font-size: large;
+    }
+    .useful-box-2{
+        border: 1px solid #007bff;
+        width: 150px;
+        height: auto;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-sizing: border-box;
+        font-size: large;
+    }
+    .button{
+        border: 3px solid #007bff;
+        background-color: #c5defa;
+        text-align: center;
+        width: 75px;
+        height: 50px;
+        border-radius: 8px;
+        color:#6566ad;
+    }
+    .nandu {
+        border: 2px solid #fc7c33;
+        background-color: #f8934f;
+        width: 60px;
+        height: 35px;
+        color: white;
+        line-height: 35px; 
+        text-align: center;
+        font-size: 15px;
+        border-radius: 5px;
+    }
+    .nandu-KJ{
+        border: 1px solid #636060;
+        border-radius: 5px;
+        padding: 15px;
+    }
+    </style>
+</head>
+<body>
+    <div class="P1000">
+        <h1>&nbsp;&nbsp;&nbsp;G2102[GESP  202512二级]&nbsp;&nbsp;黄金格</h1>
+    </div>
+    <hr>
+    <div class="nandu-KJ">
+        <span style="display: block;" class="nandu">普及</span>
+        <p style="display: inline;">
+            <b>DI值：79</b>
+        </p>
+        <button style="border: 0px;" onclick="window.location.href=`question-difficultly.html`">&#8505;&#65039;</button>
+    </div>
+    <div class="P1000">
+        <h2>题目背景：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           小杨在探险时发现了一张神奇的矩形地图。小杨听说地图中隐藏着一些
+           “黄金格”，这些格子满足一个神秘的数学挑战：当格子坐标 (r,c) 代入特定的不
+           等式关系成立时，该格子就是黄金格。具体来说，黄金格的条件是：
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&radic;r<sup>2</sup>+c<sup>2</sup>≤x+r−c。
+           例如，如果参数 x=5，那么格子 (4,3) 就是黄金格。因为左
+           边坐标平方和的平方根4<sup>2</sup>+3<sup>2</sup>算出来是 5，而右边 5+4−3 算出来是 6，5 小于
+           等于 6，符合条件。
+        </h3>
+        <h2>题目数值：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            地图有 H 行和 W 列。每个格子的坐标是 (r,c)，其中 r 表示行号从 1 到 H，c 表示列号 1 到 W。
+        </h3>
+        <h2>输入格式：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           三行，每行一个正整数，分别表示 H,W,x。
+        </h3>
+        <h2>输出格式：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            一行一个整数，代表黄金格数量。
+        </h3>
+        <h2>数据范围：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            对于所有测试点，保证给出的正整数不超过1000。
+        </h3>
+         <h2>数据样例:</h2>
+    </div>
+    <button onclick="window.location.href=`G2102-submit.html`" class="button"><b>提交代码</b></button>
+    <div class="P1000">
+        <div class="useful-box-1">
+            <b>
+                输入样例：<br><span class="span"><b>4 4 2</b></span>
+            </b>
+        </div>
+        <div class="useful-box-2">
+            <b>
+                输出样例：<br><span class="span">4<br></b></span>
+        </div>
+        <h2>提示：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;四个格子是黄金格，坐标分别为 (1,1)，(2,1)，(3,1)，(4,1)。
+        </h3>
+    </div>
+</body>
+</html>

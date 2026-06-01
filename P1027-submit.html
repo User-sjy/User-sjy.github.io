@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>P1027 综合练习</title>
+<style>
+    body{
+        max-width:800px;
+        margin:20px auto;
+        padding:0 15px;
+        font-family:sans-serif;
+        background:#f4f6f9
+    }
+    .card{
+        background:#fff;
+        padding:25px;
+        border-radius:15px;
+        box-shadow:0 5px 15px rgba(0,0,0,0.05)
+    }
+    h1{
+        text-align:center;
+        color:#2c3e50;
+        margin:0 0 5px 0
+    }
+    .problem-info{
+        text-align:center;
+        color:#6c757d;
+        font-size:14px;
+        margin-bottom:20px
+    }
+    textarea{
+        width:100%;
+        height:180px;
+        margin:10px 0;
+        font-family:Consolas,monospace;
+        font-size:16px;
+        padding:15px;
+        box-sizing:border-box;
+        border:1px solid #ddd;
+        border-radius:12px;
+        outline:none
+    }
+    textarea:focus{
+        border-color:#007bff
+    }
+    button{
+        padding:15px 20px;
+        cursor:pointer;
+        background:#007bff;
+        color:white;
+        border:none;
+        border-radius:12px;
+        transition:background 0.2s;
+        width:100%;
+        font-size:18px;
+        font-weight:bold
+    }
+    button:hover{
+        background:#0056b3
+    }
+    button:disabled{
+        cursor:not-allowed;
+        background:#6c757d
+    }
+    #result{
+        margin-top:20px;
+        padding:15px;
+        white-space:pre-wrap;
+        font-family:Consolas,monospace;
+        display:none;
+        border-radius:12px;
+        min-height:100px;
+        font-size:16px
+    }
+    .pass{
+        background:#d4edda;
+        color:#155724;
+        border:1px solid #c3e6cb
+    }
+    .fail{
+        background:#f8d7da;
+        color:#721c24;
+        border:1px solid #f5c6cb
+        }
+    .error{
+        background:#fff3cd;
+        color:#856404;
+        border:1px solid #ffeeba
+    }
+</style>
+</head>
+<body>
+<h1>P1027 综合练习</h1>
+<div class="card">
+<textarea id="code" placeholder="输入C++代码..."></textarea>
+<button id="runBtn" onclick="judge()">开始判题</button>
+<div id="result"></div>
+</div>
+
+<script>
+const API_URL = "https://wandbox.org/api/compile.json";
+const FIXED_TEST_CASES =[
+    { input: "sin 30 tan 0 \int^\pi_0{sin(x)} \int{x^2} tan 89 RAD to DEG\n1000 \int{0} \int^{\pi/2}_0{cos(x)}", expect: "0.50000 0.00000 2 x^3/3+C 57.28996 57295.77951 C 1"},
+    { input: "arctan 1 tan 45 \int{2x} arccos 0.5 sinh 710 DEG to RAD\n180 \int^2_0{x^3} arcsin 0.9999999", expect: "45.00000 1.00000 x^2+C 60.00000 inf 3.14159 4 89.97127"},
+    { input: "\int{cos(x)} sin -30 tan 89.9 sinh 100 \int^{\pi/4}_0{sec^2(x)} sin 390 cosh 20 \int{sin(x)}", expect: "sin(x)+C -0.50000 572.95780 inf 1 0.50000 inf -cos(x)+C"},
+    { input: "\int^1_0{4x^3} cos 60 \int{3x^2} \int^2_0{2x} arctan -1 DEG to RAD\n0 sinh 0.0000001 tan 270 \int^1_0{x}", expect: "1 0.50000 x^3+C 4 -45.00000 0.00000 0.00000 inf 0.5"},
+    { input: "cos 45 tan 89.99 sinh 715 \int^3_0{x^2} cosh 0.1 RAD to DEG\n3.1415927 \int{tan(x)} arctan 1000000", expect: "0.70711 5729.57789 inf 9 1.00500 180.00000 -ln|cos(x)|+C 89.99994"},
+    { input: "cos -30 tan 135 cosh -710 \int^2_{-1}{3x^2} arccos 0 DEG to RAD\n90 sinh 0.0001 \int{sec^2(x)}", expect: "0.86603 -1.00000 inf 9 90.00000 1.57080 0.00010 tan(x)+C"},
+    { input: "cos 510 tan 89.999 tanh 0 \int^1_0{4x^3} sinh 1 RAD to DEG\n1.5707963 \int{csc^2(x)} arctan -1000000000", expect: "-0.86603 57295.77951 0.00000 1 1.17520 90.00000 -cot(x)+C -90.00000"},
+    { input: "cos 180 tan 30 tanh 1 \int^5_0{2} cosh 1 DEG to RAD\n360 arcsin 0.0000001 \int{sec(x)tan(x)}", expect: "-1.00000 0.57735 0.76159 10 1.54308 6.28319 0.00001 sec(x)+C"},
+    { input: "arcsin 0 tan 270 tanh -1 \int^2_1{3} cosh -1 DEG to RAD\n0.0001 arcsin 0.9999999 \int{csc(x)cot(x)}", expect: "0.00000 inf -0.76159 3 1.54308 0.00000 89.97127 -csc(x)+C"},
+    { input: "sinh 1 tan 90 tanh 20 \int^0_{-2}{x} cosh 0.001 RAD to DEG\n6.2831853 arcsin 1.0000001 \int{e^x}", expect: "1.17520 inf 1.00000 -2 1.00000 360.00000 nan e^x+C"},
+    { input: "sinh -1 tan 60 tanh 50 \int^4_1{x} cosh 0.1 DEG to RAD\n1000000 arcsin -1.0000001 \int{1/x}", expect: "-1.17520 1.73205 1.00000 7.5 1.00500 17453.29252 nan ln|x|+C"},
+    { input: "sinh 0.0001 tan 5550 tanh -20 \int^2_0{x^3} cosh 20 RAD to DEG\n0.0000001 arcsin 2 \int{2sin(x)}", expect: "0.00010 -0.57735 -1.00000 4 inf 0.00001 nan -2cos(x)+C"},
+    { input: "sinh 0.0000001 tan 450 tanh 5 \int^\pi_0{sin(2x)} cosh 100 DEG to RAD\n-45 arcsin 0.0000001 \int{5}", expect: "0.00000 inf 0.99991 0 inf -0.78540 0.00001 5x+C"},
+    { input: "sinh -0.0001 tan 9090 tanh 800 \int^{\pi/2}_0{sin(2x)} cosh 710 RAD to DEG\n-1 arcsin 0.8660254 \int{x}", expect: "-0.00010 inf 1.00000 1 inf -57.29578 60.00000 x^2/2+C"},
+    { input: "sinh 20 tan 9090909090909090909090 tanh 19 \int^{\pi/2}_{-\pi/2}{cos(x)} cosh 715 DEG to RAD\n99999999999999999999 arcsin 0 \int{x^3}", expect: "inf inf 1.00000 2 inf 1745329251994329563136.00000 0.00000 x^4/4+C"},
+    { input: "sinh 100 \int^2_1{1/x} \int^{\pi/3}_0{3sin(x)} RAD to DEG\n1000000 arcsin 0.5 sin 0.5 arctan 5550", expect: "inf 0.69315 1.5 57295779.51308 30.00000 0.50000 89.98968"},
+    { input: "sinh 710 \int^1_0{e^x} \int{6x^5} RAD to DEG\n99999999999999999999 arcsin 1 tan 45 arctan 1.73205", expect: "inf 1.71828 x^6+C 5729577951308232085504.00000 90.00000 1.00000 60.00000"},
+    { input: "sinh 715 \int^\pi_0{2sin(x)} \int{x^3} DEG to RAD\n9090909090909090909090 arcsin -1 cos 45 arctan 0.0000001", expect: "inf 4 x^4/4+C 158686295543363609067520.00000 -90.00000 0.70711 0.00001"},
+    { input: "tanh 0 \int{1} arcsin 0 RAD to DEG\n0.7853982 arcsin 0.9999999 cos -30 arctan 0.0000001", expect: "0.00000 x+C 0.00000 45.00000 89.97127 0.86603 0.00001"},
+    { input: "\int^2_0{2x} \int{3x^2} arccos 0 DEG to RAD\n0.001 arcsin 1.0000001 arccos 0.5 tanh 1", expect: "4 x^3+C 90.00000 0.00002 nan 60.00000 0.76159"}
+];
+const OJ_STATUS = {
+    AC: { code: "AC", name: "通过" },
+    WA: { code: "WA", name: "答案错误" },
+    PAC: { code: "PAC", name: "部分通过" },
+    CE: { code: "CE", name: "编译错误" },
+    RE: { code: "RE", name: "运行时错误" },
+    TLE: { code: "TLE", name: "超时" }
+};
+
+function normalizeText(text) {
+    return (text || "").replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim();
+}
+
+async function executeCode(code, stdin) {
+    const response = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            compiler: "gcc-head",
+            code: code,
+            stdin: stdin,
+            options: "-std=c++11"
+        })
+    });
+    const data = await response.json();
+    return {
+        compile: { stderr: data.compiler_error || "" },
+        run: {
+            stdout: data.program_output || "",
+            stderr: data.program_error || "",
+            code: data.status === "0" ? 0 : 1
+        }
+    };
+}
+
+async function judge() {
+    const runBtn = document.getElementById('runBtn');
+    const resultBox = document.getElementById('result');
+    const codeContent = document.getElementById('code').value.trim();
+    if (!codeContent) { alert("请输入有效的C++代码"); return; }
+    runBtn.disabled = true; runBtn.innerText = "判题中...";
+    resultBox.style.display = 'block'; resultBox.className = ''; resultBox.innerText = "正在执行代码...\n\n";
+    let passCount = 0, logText = "【判题结果】\n\n", caseStatusList = [];
+    for (let i = 0; i < FIXED_TEST_CASES.length; i++) {
+        try {
+            const { input, expect } = FIXED_TEST_CASES[i];
+            const result = await executeCode(codeContent, input + "\n");
+            if (result.compile && result.compile.stderr) {
+                logText += `用例${i+1}: [CE] 编译错误\n${result.compile.stderr}\n`;
+                caseStatusList.push(OJ_STATUS.CE); resultBox.innerText = logText; continue;
+            }
+            const stdout = result.run?.stdout || "", stderr = result.run?.stderr || "", exitCode = result.run?.code || 0;
+            if (stderr || exitCode !== 0) {
+                logText += `用例${i+1}: [RE] 运行时错误\n${stderr}\n`;
+                caseStatusList.push(OJ_STATUS.RE); resultBox.innerText = logText; continue;
+            }
+            const actualOutput = normalizeText(stdout), expectOutput = normalizeText(expect);
+            let status;
+            if (actualOutput === expectOutput) { status = OJ_STATUS.AC; passCount++; }
+            else { status = OJ_STATUS.WA; }
+            caseStatusList.push(status);
+            logText += `用例${i+1}: [${status.code}] ${status.name}`;
+            if (status.code === "WA") logText += `\n  输入: ${input}\n  输出: ${actualOutput || "(空)"}`;
+            logText += "\n";
+        } catch (error) {
+            logText += `用例${i+1}: [RE] ${error.message}\n`;
+            caseStatusList.push(OJ_STATUS.RE);
+        }
+        resultBox.innerText = logText;
+    }
+    const total = FIXED_TEST_CASES.length;
+    if (passCount === total) { logText += `\n[AC] 通过\n`; resultBox.className = 'pass'; }
+    else if (passCount > 0) { logText += `\n[PAC] 部分通过\n`; resultBox.className = 'error'; }
+    else { logText += `\n[WA] 答案错误\n`; resultBox.className = 'fail'; }
+    logText += `\n📊 判题总结: ${passCount}/${total} 个用例通过`;
+    resultBox.innerText = logText;
+    runBtn.disabled = false; runBtn.innerText = "开始判题";
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星珩</title>
+    <style>
+    .P1000{
+        color:#3f3c3c;
+    }
+    h1{
+        margin: 0;
+        font-size: 35px;
+        padding-right: 20px; 
+    }
+    .button-2{
+        border: 2px solid #fc5959;
+        background-color: #fc5959;
+        width: 50px;
+        height: 35px;
+        color:white;
+        border-radius: 8px;
+    }
+    .useful-box-1{
+        border: 1px solid #007bff;
+        width: 150px;
+        height: auto;
+        padding: 8px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-sizing: border-box;
+        font-size: large;
+    }
+    .useful-box-2{
+        border: 1px solid #007bff;
+        width: 150px;
+        height: auto;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-sizing: border-box;
+        font-size: large;
+    }
+    .button{
+        border: 3px solid #007bff;
+        background-color: #c5defa;
+        text-align: center;
+        width: 75px;
+        height: 50px;
+        border-radius: 8px;
+        color:#6566ad;
+    }
+    .nandu {
+        border: 2px solid #fc7c33;
+        background-color: #f8934f;
+        width: 60px;
+        height: 35px;
+        color: white;
+        line-height: 35px; 
+        text-align: center;
+        font-size: 15px;
+        border-radius: 5px;
+    }
+    .nandu-KJ{
+        border: 1px solid #636060;
+        border-radius: 5px;
+        padding: 15px;
+    }
+    </style>
+</head>
+<body>
+    <div class="P1000">
+        <h1>&nbsp;&nbsp;&nbsp;G3102[GESP202403  三级]&nbsp;&nbsp;字母求和</h1>
+    </div>
+    <hr>
+    <div class="nandu-KJ">
+        <span style="display: block;" class="nandu">普及</span>
+        <p style="display: inline;">
+            <b>DI值：79.9</b>
+        </p>
+        <button style="border: 0px;" onclick="window.location.href=`question-difficultly.html`">&#8505;&#65039;</button>
+    </div>
+    <div class="P1000">
+        <h2>题目背景：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            小杨同学发明了一种新型密码，对于每一个小写英文字母，该小写字母代
+            表了一个正整数，即该字母在字母顺序中的位置，例如字母 a 代表了正整数 1，
+            字母 b 代表了正整数 2；对于每一个大写英文字母，该大写字母代表了一个负整
+            数，即该字母的 ASCII 码的相反数，例如字母 A 代表了负整数 −65。小杨同学
+            利用这种放缩对一个整数进行了加密并得到了一个由大写字母和小写字母组成的
+            字符串，该字符串中每个字母所代表数字的总和即为加密前的整数，例如 aAc 对
+            应的加密前的整数为 1+(−65)+3=−61。
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            对于给定的字符串，请你计算出它对应的加密前的整数是多少。
+        </h3>
+        <h2>题目数值：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            一个正整数n，一个由大写字母和小写字母的字符串 T。
+        </h3>
+        <h2>输入格式：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            第一行一个正整数 n，表示字符串中字母的个数。第二行一个由大写字母
+            和小写字母的字符串 T，代表加密后得到的字符串。
+        </h3>
+        <h2>输出格式：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            输出一行一个整数，代表加密前的整数。
+        </h3>
+        <h2>数据范围：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            对于%100的数据：1&le;n&le;10<sup>5</sup>。
+        </h3>
+         <h2>数据样例:</h2>
+    </div>
+    <button onclick="window.location.href=`G3102-submit.html`" class="button"><b>提交代码</b></button>
+    <div class="P1000">
+        <div class="useful-box-1">
+            <b>
+                输入样例：<br><span class="span"><b>3<br>aAc</b></span>
+            </b>
+        </div>
+        <div class="useful-box-2">
+            <b>
+                输出样例：<br><span class="span">-61</b></span>
+        </div>
+    </div>
+</body>
+</html>

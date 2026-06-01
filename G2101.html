@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星珩</title>
+    <style>
+    .P1000{
+        color:#3f3c3c;
+    }
+    h1{
+        margin: 0;
+        font-size: 33.7px;
+        padding-right: 20px; 
+    }
+    .button-2{
+        border: 2px solid #fc5959;
+        background-color: #fc5959;
+        width: 50px;
+        height: 35px;
+        color:white;
+        border-radius: 8px;
+    }
+    .useful-box-1{
+        border: 1px solid #007bff;
+        width: 150px;
+        height: auto;
+        padding: 8px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-sizing: border-box;
+        font-size: large;
+    }
+    .useful-box-2{
+        border: 1px solid #007bff;
+        width: 150px;
+        height: auto;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-sizing: border-box;
+        font-size: large;
+    }
+    .button{
+        border: 3px solid #007bff;
+        background-color: #c5defa;
+        text-align: center;
+        width: 75px;
+        height: 50px;
+        border-radius: 8px;
+        color:#6566ad;
+    }
+    .nandu {
+        border: 2px solid #fcc633;
+        background-color: #f8df4f;
+        width: 60px;
+        height: 35px;
+        color: white;
+        line-height: 35px; 
+        text-align: center;
+        font-size: 15px;
+        border-radius: 5px;
+    }
+    .nandu-KJ{
+        border: 1px solid #636060;
+        border-radius: 5px;
+        padding: 15px;
+    }
+    </style>
+</head>
+<body>
+    <div class="P1000">
+        <h1>&nbsp;&nbsp;&nbsp;G2101[GESP  202306二级]&nbsp;&nbsp;自幂数判断</h1>
+    </div>
+    <hr>
+    <div class="nandu-KJ">
+        <span style="display: block;" class="nandu">中等</span>
+        <p style="display: inline;">
+            <b>DI值：139</b>
+        </p>
+        <button style="border: 0px;" onclick="window.location.href=`question-difficultly.html`">&#8505;&#65039;</button>
+    </div>
+    <div class="P1000">
+        <h2>题目背景：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           自幂数是指，一个 N 位数，满足各位数字 N 次方之和是本身。例如，153
+           是 3 位数，其每位数的 3 次方之和，1<sup>3</sup>+5<sup>3</sup>+3<sup>3</sup>=153，因此 153 是自幂数；
+           1634 是 4 位数，其每位数的 4 次方之和，1<sup>4</sup>+6<sup>4</sup>+3<sup>4</sup>+4<sup>4</sup>=1634，因此 1634
+           是自幂数。现在，输入若干个正整数，请判断它们是否是自幂数。
+        </h3>
+        <h2>题目数值：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            一个正整数 M，表示有 M 个待判断的正整数。从第2行开始的 M 行，每
+            行一个待判断的正整数。
+        </h3>
+        <h2>输入格式：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           输入第一行是一个正整数 M，表示有 M 个待判断的正整数。从第 2 行开
+           始的 M 行，每行一个待判断的正整数。
+        </h3>
+        <h2>输出格式：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            输出 M 行，如果对应的待判断正整数为自幂数，则输出英文大写字母 T，
+            否则输出英文大写字母 F。
+        </h3>
+        <h2>数据范围：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            对于%100的数据：这些正整数均小于10<sup>8</sup>。
+        </h3>
+        <h2>数据样例:</h2>
+    </div>
+    <button onclick="window.location.href=`G2101-submit.html`" class="button"><b>提交代码</b></button>
+    <div class="P1000">
+        <div class="useful-box-1">
+            <b>
+                输入样例：<br><span class="span"><b>5<br>8208<br>548834<br>88593477<br>12345<br>5432</b></span>
+            </b>
+        </div>
+        <div class="useful-box-2">
+            <b>
+                输出样例：<br><span class="span">T<br>T<br>T<br>F<br>F<br></b></span>
+        </div>
+        <h2>提示：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不需要等到所有输入结束在依次输出，可以输入一个数就判断一个
+            数并输出，再输入下一个数。
+        </h3>
+    </div>
+</body>
+</html>

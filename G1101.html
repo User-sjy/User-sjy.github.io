@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星珩</title>
+    <style>
+    .P1000{
+        color:#3f3c3c;
+    }
+    h1{
+        margin: 0;
+        font-size: 35px;
+        padding-right: 20px; 
+    }
+    .button-2{
+        border: 2px solid #fc5959;
+        background-color: #fc5959;
+        width: 50px;
+        height: 35px;
+        color:white;
+        border-radius: 8px;
+    }
+    .useful-box-1{
+        border: 1px solid #007bff;
+        width: 150px;
+        height: auto;
+        padding: 8px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-sizing: border-box;
+        font-size: large;
+    }
+    .useful-box-2{
+        border: 1px solid #007bff;
+        width: 150px;
+        height: auto;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-sizing: border-box;
+        font-size: large;
+    }
+    .button{
+        border: 3px solid #007bff;
+        background-color: #c5defa;
+        text-align: center;
+        width: 75px;
+        height: 50px;
+        border-radius: 8px;
+        color:#6566ad;
+    }
+    .nandu {
+        border: 2px solid #fc7c33;
+        background-color: #f8934f;
+        width: 60px;
+        height: 35px;
+        color: white;
+        line-height: 35px; 
+        text-align: center;
+        display: inline-block;
+        font-size: 15px;
+        border-radius: 5px;
+        flex-shrink: 0;
+    }
+    .nandu-KJ{
+        border: 1px solid #636060;
+        border-radius: 5px;
+        padding: 15px;
+    }
+    </style>
+</head>
+<body>
+    <div class="P1000">
+        <h1>&nbsp;&nbsp;&nbsp;G1101[GESP  202412一级]&nbsp;&nbsp;温度转换</h1>
+    </div>
+    <hr>
+    <div class="nandu-KJ">
+        <span style="display: block;" class="nandu">普及</span>
+        <p style="display: inline;">
+            <b>DII值：78</b>
+        </p>
+        <button style="border: 0px;" onclick="window.location.href=`question-difficultly.html`">&#8505;&#65039;</button>
+    </div>
+    <div class="P1000">
+        <h2>题目背景：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            小杨最近学习了开尔文温度、摄氏温度和华氏温度的转换。令符号 K 表开
+            尔文温度，符号 C 表摄氏温度，符号 F 表华氏温度，这三者的转换公式如下：
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C=K−273.15<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F=C×1.8+32<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            现在小杨想编写一个程序计算某一开尔文温度对应的摄氏温度和华氏温
+            度，你能帮帮他吗?
+        </h3>
+        <h2>题目数值：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            a表示一个数，b表示另一个数，c表示结果。
+        </h3>
+        <h2>输入格式：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           一行，一个实数 K，表示开尔文温度。
+        </h3>
+        <h2>输出格式：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            一行，若输入开尔文温度对应的华氏温度高于 212，输出 Temperature 
+            is too high!；否则，输出两个由空格分隔的实数 C 和 F，分别表示摄氏温度和
+            华氏度，保留两位小数。
+        </h3>
+        <h2>数据范围：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            0&lt;K&lt;10<sup>5</sup>
+        </h3>
+        <h2>数据样例:</h2>
+    </div>
+    <button onclick="window.location.href=`G1101-submit.html`" class="button"><b>提交代码</b></button>
+    <div class="P1000">
+        <div class="useful-box-1">
+            <b>
+                输入样例：<br><span class="span"><b>412.00</b></span>
+            </b>
+        </div>
+        <div class="useful-box-2">
+            <b>
+                输出样例：<br><span class="span"><b>Temperature is too high!</b></span>
+        </div>
+    </div>
+</body>
+</html>

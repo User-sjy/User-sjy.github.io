@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星珩</title>
+    <style>
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+            width: 100%;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            position: fixed; 
+            height: 100vh;
+            box-sizing: border-box;
+        }
+        .sidebar-title {
+            font-size: 18px;
+            text-align: center;
+            padding: 0 15px 20px;
+            border-bottom: 1px solid #34495e;
+            margin: 0 15px 15px;
+        }
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+        }
+        .sidebar-menu li {
+            margin: 5px 0;
+        }
+        .sidebar-menu a {
+            display: block;
+            padding: 10px 20px;
+            color: #bdc3c7;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .sidebar-menu a:hover {
+            background-color: #34495e;
+            color: white;
+            padding-left: 25px;
+        }
+        .sidebar-menu a.active {
+            background-color: #007bff;
+            color: white;
+        }
+        .main-content {
+            flex: 1;
+            margin-left: 200px; 
+            background-color: rgb(196, 198, 218);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 20px;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        .form-container{
+            width: 140px;
+            height: 90px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin: 50px 0 0 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            position: static;
+        }
+        .input{
+            width: 100%;
+            height: 24px;
+            padding: 4px 6px;
+            margin-bottom: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 12px;
+            line-height: 1;
+        }
+        .btn-status-wrapper {
+            width: 100%;
+            height: 24px;
+            display: flex;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .submit-btn {
+            width: 50%;
+            height: 100%;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+            line-height: 24px;
+            text-align: center;
+            padding: 0;
+        }
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+        .status-display {
+            width: 50%;
+            height: 100%;
+            font-size: 11px;
+            line-height: 24px;
+            text-align: center;
+            color: #333;
+            background-color: #f8f9fa;
+            border-left: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .status-exist {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status-not-exist {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .status-empty {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .title {
+            color: rgb(145, 153, 245);
+            font-size: 2em;
+            margin: 0;
+        }
+        .desc {
+            color: gray;
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        .tip{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <h3 class="sidebar-title">星珩刷题</h3>
+            <ul class="sidebar-menu" id="sidebarMenu">
+                <li><a href="xingheng.html" class="active">首页</a></li>
+                <li><a href="problem.html">题库</a></li>
+                <li><a href="record.html">刷题记录</a></li>
+                <li><a href="about.html">关于我们</a></li>
+            </ul>
+        </aside>
+        <main class="main-content">
+            <h1 class="title">星珩</h1>
+            <p class="desc">专为C++刷题的一个网站</p>
+            <div class="form-container">
+                <form id="QF" onsubmit="return false;">
+                    <input type="text" class="input" placeholder="请输入题号，如：P1000" name="QI" id="QI">
+                    <div class="btn-status-wrapper">
+                        <button type="button" class="submit-btn" onclick="handleSubmit()">提交</button>
+                        <div class="status-display" id="statusDisplay">状态</div>
+                    </div>
+                    <div class="tip" id="TB"></div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuItems = document.querySelectorAll('#sidebarMenu a');
+            const currentPath = window.location.pathname;
+            const currentPage = currentPath.split('/').pop() || 'xingheng.html';
+            menuItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === currentPage) {
+                    item.classList.add('active');
+                }
+            });
+        });
+        const QJ={
+            "P1001":"P1001.html","p1001":"P1001.html","P1000":"P1000.html","p1000":"P1000.html",
+            "G1100":"G1100.html","g1100":"G1100.html","P1002":"P1002.html","G1101":"G1101.html",
+            "g1101":"G1101.html","G1102":"G1102.html","g1102":"G1102.html","G2100":"G2100.html",
+            "g2100":"G2100.html","G2101":"G2101.html","g2101":"G2101.html","G2102":"G2102.html",
+            "g2102":"G2102.html","G4100":"G4100.html","g4100":"G4100.html","G3100":"G3100.html",
+            "g3100":"G3100.html","G3101":"G3101.html","g3101":"G3101.html","G3102":"G3102.html",
+            "g3102":"G3102.html","P1003":"P1003.html","p1003":"P1003.html","P1004":"P1004.html",
+            "p1004":"P1004.html","P1005":"P1005.html","p1005":"P1005.html","P1006":"P1006.html",
+            "p1006":"P1006.html","P1007":"P1007.html","p1007":"P1007.html","P1008":"P1008.html",
+            "p1008":"P1008.html"
+        };
+        const EQI=Object.keys(QJ);
+        const statusDisplay = document.getElementById("statusDisplay");
+        function resetStatus() {
+            statusDisplay.className = "status-display";
+            statusDisplay.textContent = "状态";
+        }
+        function handleSubmit() {
+            const inputEle = document.getElementById("QI");
+            const II = inputEle.value.trim();
+            resetStatus(); 
+            if(!II){
+                statusDisplay.className = "status-display status-empty";
+                statusDisplay.textContent = "请输入题号";
+                return;
+            }
+            if(EQI.includes(II)){
+                statusDisplay.className = "status-display status-exist";
+                statusDisplay.textContent = `${II} ✔ 存在`;
+                setTimeout(()=>{
+                    window.location.href = QJ[II];
+                },1000);
+            }else{
+                statusDisplay.className = "status-display status-not-exist";
+                statusDisplay.textContent = `${II} ❌ 不存在`;
+            }
+        }
+        document.getElementById("QI").addEventListener("input", resetStatus);
+    </script>
+</body>
+</html>

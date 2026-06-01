@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星珩</title>
+    <style>
+    .P1000{
+        color:#3f3c3c;
+    }
+    h1{
+        margin: 0;
+        font-size: 35px;
+        padding-right: 20px; 
+    }
+    .button-2{
+        border: 2px solid #fc5959;
+        background-color: #fc5959;
+        width: 50px;
+        height: 35px;
+        color:white;
+        border-radius: 8px;
+    }
+    .useful-box-1{
+        border: 1px solid #007bff;
+        width: 150px;
+        height: 110px;
+        padding: 8px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-sizing: border-box;
+        font-size: large;
+    }
+    .useful-box-2{
+        border: 1px solid #007bff;
+        width: 150px;
+        height: 75px;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-sizing: border-box;
+        font-size: large;
+    }
+    .button{
+        border: 3px solid #007bff;
+        background-color: #c5defa;
+        text-align: center;
+        width: 75px;
+        height: 50px;
+        border-radius: 8px;
+        color:#6566ad;
+    }
+    .nandu {
+        border: 2px solid #fc7c33;
+        background-color: #f8934f;
+        width: 60px;
+        height: 35px;
+        color: white;
+        line-height: 35px; 
+        text-align: center;
+        display: inline-block;
+        font-size: 15px;
+        border-radius: 5px;
+        flex-shrink: 0;
+    }
+    .nandu-KJ{
+        border: 1px solid #636060;
+        border-radius: 5px;
+        padding: 15px;
+    }
+    </style>
+</head>
+<body>
+    <div class="P1000">
+        <h1>&nbsp;&nbsp;&nbsp;P1000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;小明的积分</h1>
+    </div>
+    <hr>
+    <div class="nandu-KJ">
+        <span style="display: block;" class="nandu">普及-</span>
+        <p style="display: inline;">
+            <b>DI值：65</b>
+        </p>
+        <button style="border: 0px;" onclick="window.location.href=`question-difficultly.html`">&#8505;&#65039;</button>
+    </div>
+    <div class="P1000">
+        <h2>题目背景：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            小明在编程兔上课，由于上课表现良好，挣到了很多积分。有一天，他看到
+            编程兔门口有许多可以用积分换的零食，于是他开始思索怎样买零食价值是
+            最大的，但是小明的背包很小，装不了多少零食。小明懒得算了，你能帮他
+            用C++算一算吗？
+        </h3>
+        <h2>题目数值：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            小明有n个积分，门口有m个物品，小明的背包能容纳x克的东西，每个物品
+            都有对应的价格、价值和重量，输出最大价值的物品耗费的积分和价值。
+        </h3>
+        <h2>输入格式：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            第一行输入小明的n个积分，门口有m个物品；输入小明的背包能容纳x克的
+            东西；接下来n行输入每个物品消耗的积分数、价值和它的重量。
+        </h3>
+        <h2>输出格式：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            第一行输出最大价值的物品耗费的积分；第二行输出物品的总价值。
+        </h3>
+        <h2>数据范围：</h2>
+        <h3>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            对%100的数据保证：n<=500且n>0,m>0且m<=20,x>0且x<=500。
+        </h3>
+        <h2>数据样例:</h2>
+    </div>
+    <button onclick="window.location.href=`P1000-submit.html`" class="button"><b>提交代码</b></button>
+    <div class="P1000">
+        <div class="useful-box-1">
+            <b>
+                输入样例：<br>&nbsp;&nbsp;10&nbsp;&nbsp;2&nbsp;&nbsp;5<br>&nbsp;&nbsp;1&nbsp;&nbsp;1&nbsp;&nbsp;1<br>&nbsp;&nbsp;3&nbsp;&nbsp;4&nbsp;&nbsp;2
+            </b>
+        </div>
+        <div class="useful-box-2">
+            <b>
+                输出样例：<br>&nbsp;&nbsp;7&nbsp;&nbsp;9&nbsp;&nbsp;7
+        </div>
+    </div>
+</body>
+</html>
