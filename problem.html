@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星珩刷题 · 题库</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', '微软雅黑', sans-serif;
+            background: #f0f2f5;
+        }
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 240px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 24px 0;
+            position: fixed;
+            height: 100vh;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+        }
+        .sidebar-title {
+            font-size: 22px;
+            text-align: center;
+            padding: 0 15px 24px;
+            border-bottom: 1px solid #3d5a73;
+            margin: 0 15px 20px;
+            font-weight: 600;
+        }
+        .sidebar-menu {
+            list-style: none;
+        }
+        .sidebar-menu li {
+            margin: 4px 0;
+        }
+        .sidebar-menu a {
+            display: block;
+            padding: 12px 24px;
+            color: #bdc3c7;
+            text-decoration: none;
+            font-size: 15px;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+        .sidebar-menu a:hover {
+            background-color: #34495e;
+            color: white;
+            padding-left: 30px;
+            border-left-color: #3498db;
+        }
+        .sidebar-menu a.active {
+            background-color: #3498db;
+            color: white;
+        }
+        .main-content {
+            margin-left: 240px;
+            padding: 24px;
+            width: 100%;
+        }
+        .top-bar {
+            background: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .user-info {
+            color: #666;
+            font-size: 14px;
+        }
+        .problem-table {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+        .table-header {
+            display: grid;
+            grid-template-columns: 100px 1fr 100px 100px;
+            background: #f8f9fa;
+            padding: 14px 20px;
+            border-bottom: 1px solid #e9ecef;
+            font-weight: 600;
+            color: #495057;
+            font-size: 14px;
+        }
+        .problem-row {
+            display: grid;
+            grid-template-columns: 100px 1fr 100px 100px;
+            padding: 14px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            align-items: center;
+            transition: background 0.2s;
+        }
+        .problem-row:hover {
+            background: #f8f9fa;
+        }
+        .problem-id {
+            color: #3498db;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        .problem-title {
+            color: #333;
+            font-size: 15px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .problem-title:hover {
+            padding-left: 8px;
+            color: #3498db;
+        }
+        .difficulty {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            text-align: center;
+            width: fit-content;
+        }
+        .difficulty.easy { background: #d4edda; color: #155724; }
+        .difficulty.medium { background: #fff3cd; color: #856404; }
+        .difficulty.hard { background: #f8d7da; color: #721c24; }
+        .pass-rate {
+            color: #666;
+            font-size: 13px;
+        }
+        /* 下滑栏样式 - 半行高度 */
+        .container {
+            width: 100%;
+        }
+        .item {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 20px;
+            cursor: pointer;
+            background: white;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .item-header:hover {
+            background: #f5f5f5;
+        }
+        .arrow {
+            transition: transform 0.3s;
+            color: #999;
+        }
+        .item-header.active .arrow {
+            transform: rotate(180deg);
+        }
+        .item-content {
+            max-height: 0;
+            padding: 0 20px;
+            overflow: hidden;
+            background: #fafafa;
+            border-top: 1px solid #eee;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        .item-content.show {
+            max-height: 100px;
+            padding: 8px 20px;
+        }
+        .item-content p {
+            margin-bottom: 4px;
+            font-size: 13px;
+            color: #555;
+        }
+        .button{
+            border: 3px solid #007bff;
+            background-color: #c5defa;
+            text-align: center;
+            width: 75px;
+            height: 50px;
+            border-radius: 8px;
+            color:#6566ad;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <h3 class="sidebar-title">星珩刷题</h3>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active">首页</a></li>
+                <li><a href="problem.html">题库</a></li>
+                <li><a href="user.html">个人主页</a></li>
+                <li><a href="about.html">关于我们</a></li>
+            </ul>
+        </aside>
+        <div class="main-content">
+            <div class="top-bar">
+                <div class="container">
+                    <div class="item">
+                        <div class="item-header" onclick="toggleItem(this)">
+                            <span>排序方式</span>
+                            <span class="arrow">▼</span>
+                        </div>
+                        <div class="item-content">
+                            <button onclick="window.location.href=`problem.html`" class="button">默认排序</button>
+                            <button onclick="window.location.href=`problem-P.html`" class="button">洛谷/星珩原创</button>
+                            <button onclick="window.location.href=`problem-G.html`" class="button">GESP考试原题</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-info">共 10 道题</div>
+            </div>
+            <div class="problem-table">
+                <div class="table-header">
+                    <span>题目编号</span>
+                    <span>题目名称</span>
+                    <span>难度</span>
+                    <span>通过率</span>
+                </div>
+                <div class="problem-row">
+                    <div class="problem-id">P1001</div>
+                    <div><a class="problem-title">小明的积分</a></div>
+                    <div><span class="difficulty easy">简单</span></div>
+                    <div class="pass-rate">65%</div>
+                </div>
+                <div class="problem-row">
+                    <div class="problem-id">P1002</div>
+                    <div><a class="problem-title">Hello, World!</a></div>
+                    <div><span class="difficulty easy">简单</span></div>
+                    <div class="pass-rate">82%</div>
+                </div>
+                <div class="problem-row">
+                    <div class="problem-id">P1003</div>
+                    <div><a class="problem-title">判断闰年</a></div>
+                    <div><span class="difficulty easy">简单</span></div>
+                    <div class="pass-rate">71%</div>
+                </div>
+                <div class="problem-row">
+                    <div class="problem-id">P1004</div>
+                    <div><a class="problem-title">斐波那契数列</a></div>
+                    <div><span class="difficulty easy">简单</span></div>
+                    <div class="pass-rate">58%</div>
+                </div>
+                <div class="problem-row">
+                    <div class="problem-id">P1005</div>
+                    <div><a class="problem-title">数组去重</a></div>
+                    <div><span class="difficulty medium">中等</span></div>
+                    <div class="pass-rate">42%</div>
+                </div>
+                <div class="problem-row">
+                    <div class="problem-id">P1006</div>
+                    <div><a class="problem-title">字符串反转</a></div>
+                    <div><span class="difficulty easy">简单</span></div>
+                    <div class="pass-rate">67%</div>
+                </div>
+                <div class="problem-row">
+                    <div class="problem-id">P1007</div>
+                    <div><a class="problem-title">背包问题</a></div>
+                    <div><span class="difficulty hard">困难</span></div>
+                    <div class="pass-rate">23%</div>
+                </div>
+                <div class="problem-row">
+                    <div class="problem-id">P1008</div>
+                    <div><a class="problem-title">最短路径</a></div>
+                    <div><span class="difficulty hard">困难</span></div>
+                    <div class="pass-rate">18%</div>
+                </div>
+                <div class="problem-row">
+                    <div class="problem-id">P1009</div>
+                    <div><a class="problem-title">快速排序</a></div>
+                    <div><span class="difficulty medium">中等</span></div>
+                    <div class="pass-rate">45%</div>
+                </div>
+                <div class="problem-row">
+                    <div class="problem-id">P1010</div>
+                    <div><a class="problem-title">二叉树遍历</a></div>
+                    <div><span class="difficulty medium">中等</span></div>
+                    <div class="pass-rate">38%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleItem(header) {
+            header.classList.toggle('active');
+            const content = header.nextElementSibling;
+            content.classList.toggle('show');
+        }
+    </script>
+</body>
+</html>

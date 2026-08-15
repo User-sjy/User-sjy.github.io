@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>星珩刷题 · 注册/登录</title>
+<!-- 引入 emailjs SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #f5f5f5;
+    }
+    .card {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+        text-align: center;
+        color: #2c3e50;
+        margin-bottom: 20px;
+    }
+    input {
+        width: 100%;
+        padding: 12px;
+        margin: 8px 0;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+    button {
+        width: 100%;
+        padding: 12px;
+        margin: 8px 0;
+        background: #28a745;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    button:hover { background:#218838; }
+    button:disabled { background:#ccc; cursor:not-allowed; }
+    .code-row {
+        display: flex;
+        gap: 10px;
+    }
+    .code-row input { flex:1; }
+    .code-row button { width:auto; white-space:nowrap; background:#007bff; }
+    .message { text-align:center; margin-top:10px; font-size:14px; }
+    .error { color:red; }
+    .success { color:green; }
+    .switch { text-align:center; margin-top:15px; font-size:14px; }
+    .switch a { color:#007bff; text-decoration:none; }
+    .switch a:hover { text-decoration:underline; }
+</style>
+<base target="_blank">
+
+// ========== jsonbin.js 内联代码 ==========
+const API_URL = './api.php';
+async function handleResponse(res) {
+    if (!res.ok) { throw new Error('HTTP ' + res.status); }
+    return res.json();
+}
+async function loadData() {
+    const res = await fetch(API_URL + '?action=load');
+    const r = await handleResponse(res);
+    return r.data ?? r;
+}
+async function saveData(data) {
+    const res = await fetch(API_URL + '?action=save', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data)
+    });
+    const r = await handleResponse(res);
+    return r.data ?? r;
+}
+async function updateData(newData) {
+    const res = await fetch(API_URL + '?action=update', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newData)
+    });
+    const r = await handleResponse(res);
+    return r.data ?? r;
+}
+async function getUser(email) {
+    try { const data = await loadData(); return data.users ? (data.users[email] || null) : null; }
+    catch { return null; }
+}
+async function verifyUser(email, password) {
+    try {
+        const user = await getUser(email);
+        if (!user) return { success: false, error: '用户不存在' };
+        if (user.password !== password) return { success: false, error: '密码错误' };
+        return { success: true, user };
+    } catch (err) { return { success: false, error: err.message }; }
+}
+async function createUser(email, userName, password) {
+    try {
+        const data = await loadData();
+        if (data.users) {
+            for (const [key, user] of Object.entries(data.users)) {
+                if (user.userName === userName) return { success: false, error: '用户名已被占用' };
+            }
+        }
+        const newUser = { userName, password, email, score: 0, passed: 0, avgPassed: 0, submissions: 0, pass: [] };
+        if (!data.users) data.users = {};
+        data.users[email] = newUser;
+        await updateData(data);
+        return { success: true, user: newUser };
+    } catch (err) { return { success: false, error: err.message }; }
+}
+
+</head>
+<body>
+<div class="card">
+    <h1 id="page-title">📝 注册账号</h1>
+    <div id="reg-box">
+        <input type="text" id="username" placeholder="用户名">
+        <input type="email" id="email" placeholder="邮箱">
+        <div class="code-row">
+            <input type="text" id="code" placeholder="6位验证码">
+            <button id="sendBtn">获取验证码</button>
+        </div>
+        <input type="password" id="password" placeholder="密码（至少6位）">
+        <button id="regBtn">注册</button>
+    </div>
+    <!-- 修复：login-box 移出 reg-box，作为独立兄弟节点 -->
+    <div id="login-box" style="display:none;">
+        <input type="email" id="loginEmail" placeholder="注册邮箱">
+        <input type="password" id="loginPwd" placeholder="登录密码">
+        <button id="loginBtn">登录</button>
+    </div>
+    <div id="msg" class="message"></div>
+    <div class="switch">
+        <a id="switch-btn" href="javascript:void(0)">已有账号？去登录</a>
+    </div>
+</div>
+<script type="module">
+import { createUser, verifyUser } from './jsonbin.js';
+
+emailjs.init('eUoF8AeFU-PUwmHOg');
+const SID = 'service_o9n7y0q';
+const TID = 'template_ozrcgn7';
+let realCode = "";
+let timer = null;
+const msgDom = document.getElementById('msg');
+const pageTitle = document.getElementById('page-title');
+const regBox = document.getElementById('reg-box');
+const loginBox = document.getElementById('login-box');
+const switchBtn = document.getElementById('switch-btn');
+
+// 切换登录/注册
+switchBtn.onclick = function(){
+    if(regBox.style.display !== 'none'){
+        regBox.style.display = 'none';
+        loginBox.style.display = 'block';
+        pageTitle.innerText = "🔐 用户登录";
+        switchBtn.innerText = "没有账号？去注册";
+    }else{
+        regBox.style.display = 'block';
+        loginBox.style.display = 'none';
+        pageTitle.innerText = "📝 注册账号";
+        switchBtn.innerText = "已有账号？去登录";
+    }
+    msgDom.innerText = "";
+}
+
+function showMsg(txt, type){
+    msgDom.innerText = txt;
+    msgDom.className = type === 'err' ? 'message error' : 'message success';
+    clearTimeout(window.msgTimer);
+    window.msgTimer = setTimeout(()=>msgDom.innerText="",3000);
+}
+
+// 获取验证码
+document.getElementById('sendBtn').onclick = async function(){
+    const email = document.getElementById('email').value.trim();
+    const reg = /^[a-zA-Z0-9_\-\.]+@[a-zA-Z0-9]+\.[a-zA-Z\.]+$/;
+    if(!email) return showMsg("请输入邮箱","err");
+    if(!reg.test(email)) return showMsg("邮箱格式错误","err");
+    if(timer){ return showMsg("请等待倒计时结束","err"); }
+    realCode = String(Math.floor(Math.random()*900000+100000));
+    try{
+        // 修复：使用 showMsg 替代未定义的 show()
+        await emailjs.send(SID,TID,{email,code:realCode});
+        showMsg(`验证码已发送至${email}`,"ok");
+        let cd = 60;
+        const btn = this;
+        btn.disabled = true;
+        timer = setInterval(()=>{
+            cd--;
+            btn.innerText = `${cd}s后重发`;
+            if(cd<=0){
+                clearInterval(timer);
+                timer = null;
+                btn.disabled = false;
+                btn.innerText = "获取验证码";
+            }
+        },1000);
+    }catch(e){
+        showMsg("发送失败："+e.message,"err");
+    }
+}
+
+// 注册按钮 —— 修复：.value.trim() 和 createUser()
+document.getElementById('regBtn').onclick = async ()=>{
+    const uname = document.getElementById('username').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const code = document.getElementById('code').value.trim();
+    const pwd = document.getElementById('password').value.trim();
+    if(!uname) return showMsg("填写用户名","err");
+    if(!email) return showMsg("填写邮箱","err");
+    if(!code) return showMsg("填写验证码","err");
+    if(!pwd || pwd.length<6) return showMsg("密码至少6位","err");
+    if(code !== realCode) return showMsg("验证码错误","err");
+    // 修复：create -> createUser
+    const res = await createUser(email,uname,pwd);
+    if(res.success){
+        localStorage.setItem("Is","true");
+        localStorage.setItem("userEmail",email);
+        showMsg("注册成功，跳转首页","ok");
+        setTimeout(()=>location.href="index.html",1000);
+    }else{
+        showMsg(res.error,"err");
+    }
+}
+
+// 登录按钮 —— 修复：.value.trim()
+document.getElementById('loginBtn').onclick = async ()=>{
+    const email = document.getElementById('loginEmail').value.trim();
+    const pwd = document.getElementById('loginPwd').value.trim();
+    if(!email || !pwd) return showMsg("填写邮箱密码","err");
+    const res = await verifyUser(email,pwd);
+    if(res.success){
+        localStorage.setItem("Is","true");
+        localStorage.setItem("userEmail",email);
+        showMsg("登录成功，跳转首页","ok");
+        setTimeout(()=>location.href="index.html",1000);
+    }else{
+        showMsg(res.error,"err");
+    }
+}
+</script>
+</body>
+</html>

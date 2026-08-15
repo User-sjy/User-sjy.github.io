@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>JSONBin 测试</title>
+    <style>
+        body { font-family: Arial; padding: 20px; max-width: 800px; margin: 0 auto; }
+        button { margin: 5px; padding: 10px 20px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 5px; }
+        button:hover { background: #0056b3; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 8px; overflow-x: auto; }
+        .success { color: green; }
+        .error { color: red; }
+        input { padding: 8px; margin: 5px; width: 200px; }
+    </style>
+</head>
+<body>
+    <h1>JSONBin 测试工具</h1>
+    
+    <div>
+        <button id="loadBtn">📖 读取数据</button>
+        <button id="saveBtn">💾 保存测试数据</button>
+        <button id="clearBtn">🗑️ 清空数据</button>
+    </div>
+    
+    <hr>
+    
+    <div>
+        <h3>手动更新数据</h3>
+        <input type="text" id="keyInput" placeholder="字段名 (如 P1001)">
+        <input type="text" id="valueInput" placeholder="值 (如 通过)">
+        <button id="updateBtn">✏️ 更新字段</button>
+    </div>
+    
+    <hr>
+    
+    <h3>结果：</h3>
+    <pre id="result">等待操作...</pre>
+
+    <script type="module">
+        import { loadData, saveData, updateData } from './jsonbin.js';
+        
+        const resultDiv = document.getElementById('result');
+        
+        // 显示结果
+        function showResult(data, isError = false) {
+            resultDiv.className = isError ? 'error' : 'success';
+            resultDiv.innerText = typeof data === 'object' 
+                ? JSON.stringify(data, null, 2) 
+                : data;
+        }
+        
+        // 1. 读取数据
+        document.getElementById('loadBtn').onclick = async () => {
+            try {
+                resultDiv.innerText = '读取中...';
+                const data = await loadData();
+                showResult(data);
+            } catch (err) {
+                showResult('❌ 读取失败: ' + err.message, true);
+                console.error('完整错误:', err);
+            }
+};
+        
+        // 2. 保存测试数据
+        document.getElementById('saveBtn').onclick = async () => {
+            try {
+                resultDiv.innerText = '保存中...';
+                const testData = {
+                    test: 'Hello JSONBin',
+                    time: new Date().toLocaleString(),
+                    answers: {}
+                };
+                await saveData(testData);
+                showResult(testData);
+            } catch (err) {
+                showResult('❌ 保存失败: ' + err.message, true);
+            }
+        };
+        
+        // 3. 清空数据
+        document.getElementById('clearBtn').onclick = async () => {
+            try {
+                resultDiv.innerText = '清空中...';
+                const emptyData = { answers: {} };
+                await saveData(emptyData);
+                showResult(emptyData);
+            } catch (err) {
+                showResult('❌ 清空失败: ' + err.message, true);
+            }
+        };
+        
+        // 4. 更新指定字段
+        document.getElementById('updateBtn').onclick = async () => {
+            const key = document.getElementById('keyInput').value.trim();
+            const value = document.getElementById('valueInput').value.trim();
+            
+            if (!key) {
+                showResult('❌ 请输入字段名', true);
+                return;
+            }
+            
+            try {
+                resultDiv.innerText = '更新中...';
+                const updateObj = {};
+                updateObj[key] = value;
+                await updateData(updateObj);
+                const newData = await loadData();
+                showResult(newData);
+                document.getElementById('keyInput').value = '';
+                document.getElementById('valueInput').value = '';
+            } catch (err) {
+                showResult('❌ 更新失败: ' + err.message, true);
+            }
+        };
+    </script>
+</body>
+</html>

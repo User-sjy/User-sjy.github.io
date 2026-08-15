@@ -97,7 +97,7 @@
 </div>
 
 <script>
-const API_URL = "https://wandbox.org/api/compile.json";
+const API_URL = "https://godbolt.org/api/compiler/gsnapshot/compile"; 
 const FIXED_TEST_CASES = [
     { input: "10 2 5 1 1 1 3 4 2", expect: "9 7 9" },
     { input: "11 2 5 1 1 1 3 4 2", expect: "9 7 9" }
@@ -107,41 +107,145 @@ const OJ_STATUS = {
     PAC: { code: "PAC", name: "部分通过" }, CE: { code: "CE", name: "编译错误" },
     RE: { code: "RE", name: "运行时错误" }, TLE: { code: "TLE", name: "超时" }
 };
-function normalizeText(text) { return (text || "").replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim(); }
+
+function normalizeText(text) { 
+    return (text || "").replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim(); 
+}
+
 async function executeCode(code, stdin) {
     const response = await fetch(API_URL, {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ compiler: "gcc-head", code: code, stdin: stdin, options: "-std=c++11" })
+        method: "POST", 
+        headers: { 
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({ 
+            source: code, 
+            options: {
+                userArguments: "-std=c++11 -O2",
+                executeParameters: {
+                    args: [],
+                    stdin: stdin,
+                    runtimeTools: []
+                },
+                filters: {
+                    execute: true,      // 关键：启用执行
+                    binary: false,
+                    demangle: true
+                }
+            }
+        })
     });
+    
     const data = await response.json();
-    return { compile: { stderr: data.compiler_error || "" }, run: { stdout: data.program_output || "", stderr: data.program_error || "", code: data.status === "0" ? 0 : 1 } };
+    
+    // Godbolt 响应结构解析
+    // data.buildResult 包含编译信息
+    // data.stdout 是执行输出的数组 [{text: "..."}]
+    // data.stderr 是错误输出的数组 [{text: "..."}]
+    // data.code 是退出码
+    
+    const compileStderr = data.buildResult?.stderr || [];
+    const compileErrorText = compileStderr.map(e => e.text).join('\n');
+    
+    const runStdout = data.stdout || [];
+    const runStderr = data.stderr || [];
+    const stdoutText = runStdout.map(e => e.text).join('\n');
+    const stderrText = runStderr.map(e => e.text).join('\n');
+    
+    return { 
+        compile: { stderr: compileErrorText }, 
+        run: { 
+            stdout: stdoutText, 
+            stderr: stderrText, 
+            code: data.code || 0 
+        } 
+    };
 }
+
 async function judge() {
-    const runBtn = document.getElementById('runBtn'), resultBox = document.getElementById('result'), codeContent = document.getElementById('code').value.trim();
-    if (!codeContent) { alert("请输入有效的C++代码"); return; }
-    runBtn.disabled = true; runBtn.innerText = "判题中..."; resultBox.style.display = 'block'; resultBox.className = ''; resultBox.innerText = "正在执行代码...\n\n";
+    const runBtn = document.getElementById('runBtn');
+    const resultBox = document.getElementById('result');
+    const codeContent = document.getElementById('code').value.trim();
+    
+    if (!codeContent) { 
+        alert("请输入有效的C++代码"); 
+        return; 
+    }
+    
+    runBtn.disabled = true; 
+    runBtn.innerText = "判题中...";
+    resultBox.style.display = 'block'; 
+    resultBox.className = ''; 
+    resultBox.innerText = "正在执行代码...\n\n";
+    
     let passCount = 0, logText = "【判题结果】\n\n", caseStatusList = [];
+    
     for (let i = 0; i < FIXED_TEST_CASES.length; i++) {
         try {
-            const { input, expect } = FIXED_TEST_CASES[i], result = await executeCode(codeContent, input + "\n");
-            if (result.compile && result.compile.stderr) { logText += `用例${i+1}: [CE] 编译错误\n${result.compile.stderr}\n`; caseStatusList.push(OJ_STATUS.CE); resultBox.innerText = logText; continue; }
-            const stdout = result.run?.stdout || "", stderr = result.run?.stderr || "", exitCode = result.run?.code || 0;
-            if (stderr || exitCode !== 0) { logText += `用例${i+1}: [RE] 运行时错误\n${stderr}\n`; caseStatusList.push(OJ_STATUS.RE); resultBox.innerText = logText; continue; }
-            const actualOutput = normalizeText(stdout), expectOutput = normalizeText(expect);
+            const { input, expect } = FIXED_TEST_CASES[i];
+            const result = await executeCode(codeContent, input + "\n");
+            
+            if (result.compile && result.compile.stderr) { 
+                logText += `用例${i+1}: [CE] 编译错误\n${result.compile.stderr}\n`; 
+                caseStatusList.push(OJ_STATUS.CE); 
+                resultBox.innerText = logText; 
+                continue; 
+            }
+            
+            const stdout = result.run?.stdout || "";
+            const stderr = result.run?.stderr || "";
+            const exitCode = result.run?.code || 0;
+            
+            if (stderr || exitCode !== 0) { 
+                logText += `用例${i+1}: [RE] 运行时错误\n${stderr}\n`; 
+                caseStatusList.push(OJ_STATUS.RE); 
+                resultBox.innerText = logText; 
+                continue; 
+            }
+            
+            const actualOutput = normalizeText(stdout);
+            const expectOutput = normalizeText(expect);
+            
             let status;
-            if (actualOutput === expectOutput) { status = OJ_STATUS.AC; passCount++; } else { status = OJ_STATUS.WA; }
-            caseStatusList.push(status); logText += `用例${i+1}: [${status.code}] ${status.name}`;
-             if (status.code === "WA") logText += `\n  输入: ${input}\n  输出: ${actualOutput || "(空)"}`;
+            if (actualOutput === expectOutput) { 
+                status = OJ_STATUS.AC; 
+                passCount++; 
+            } else { 
+                status = OJ_STATUS.WA; 
+            }
+            
+            caseStatusList.push(status); 
+            logText += `用例${i+1}: [${status.code}] ${status.name}`;
+            if (status.code === "WA") {
+                logText += `\n  输入: ${input}\n  输出: ${actualOutput || "(空)"}`;
+            }
             logText += "\n";
-        } catch (error) { logText += `用例${i+1}: [RE] ${error.message}\n`; caseStatusList.push(OJ_STATUS.RE); }
+            
+        } catch (error) { 
+            logText += `用例${i+1}: [RE] ${error.message}\n`; 
+            caseStatusList.push(OJ_STATUS.RE); 
+        }
+        
         resultBox.innerText = logText;
     }
+    
     const total = FIXED_TEST_CASES.length;
-    if (passCount === total) { logText += `\n[AC] 通过\n`; resultBox.className = 'pass'; }
-    else if (passCount > 0) { logText += `\n[PAC] 部分通过\n`; resultBox.className = 'error'; }
-    else { logText += `\n[WA] 答案错误\n`; resultBox.className = 'fail'; }
-    logText += `\n📊 判题总结: ${passCount}/${total} 个用例通过`; resultBox.innerText = logText;
-    runBtn.disabled = false; runBtn.innerText = "开始判题";
+    if (passCount === total) { 
+        logText += `\n[AC] 通过\n`; 
+        resultBox.className = 'pass'; 
+    } else if (passCount > 0) { 
+        logText += `\n[PAC] 部分通过\n`; 
+        resultBox.className = 'error'; 
+    } else { 
+        logText += `\n[WA] 答案错误\n`; 
+        resultBox.className = 'fail'; 
+    }
+    
+    logText += `\n📊 判题总结: ${passCount}/${total} 个用例通过`; 
+    resultBox.innerText = logText;
+    runBtn.disabled = false; 
+    runBtn.innerText = "开始判题";
 }
 </script>
 </body>

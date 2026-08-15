@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>星珩</title>
     <style>
+
     .P1000{
         color:#3f3c3c;
     }
@@ -16,15 +17,15 @@
     .button-2{
         border: 2px solid #fc5959;
         background-color: #fc5959;
-        width: 50px;
-        height: 35px;
+        width: 175px;
+        height: auto;
         color:white;
         border-radius: 8px;
     }
     .useful-box-1{
         border: 1px solid #007bff;
-        width: 150px;
-        height: 110px;
+        width: 175px;
+        height: auto;
         padding: 8px;
         background-color: #f8f9fa;
         border-radius: 8px;
@@ -68,17 +69,18 @@
         border-radius: 5px;
         padding: 15px;
     }
+    
     </style>
 </head>
 <body>
     <div class="P1000">
-        <h1>&nbsp;&nbsp;&nbsp;P1014&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cos</h1>
+        <h1>&nbsp;&nbsp;&nbsp;P1007&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;小木棍</h1>
     </div>
     <hr>
     <div class="nandu-KJ">
-        <span style="display: block;" class="nandu">普及</span>
+        <span style="display: block;" class="nandu">入门+</span>
         <p style="display: inline;">
-            <b>DI值：76</b>
+            <b>DI值：50</b>
         </p>
         <button style="border: 0px;" onclick="window.location.href=`question-difficultly.html`">&#8505;&#65039;</button>
     </div>
@@ -86,39 +88,37 @@
         <h2>题目背景：</h2>
         <h3>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            小杨最近学习了三角函数的cos，他想你给他出习题，你能帮帮他吗？
-        </h3>
-        <h2>题目数值：</h2>
-        <h3>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            一个小数x。
+小明的柜子里有n根木棍，每根木棍的长度已知。
+            他想去掉最长的一根木棍，然后用剩下的木棍拼出尽可能多的等长木棍。
+            请你帮他算算，最多能拼成多少根等长的完整木棍？
         </h3>
         <h2>输入格式：</h2>
         <h3>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            输入一个角度x。
+第一行一个整数n表示木棍数量；第二行n个整数len1~ln表示每根木棍的长度。
         </h3>
         <h2>输出格式：</h2>
         <h3>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            输出cos x保留五位小数的值。
+一个整数，表示去掉最长木棍后，最多能拼出的等长木棍数量（每根长度相同，整根使用）。
+        </h3>
         <h2>数据范围：</h2>
         <h3>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            对于%100的数据，x最多两位小数
+对100%的数据保证：1≤n≤100，1≤leni≤10000。
         </h3>
         <h2>数据样例:</h2>
     </div>
-    <button onclick="window.location.href=`P1014-submit.html`" class="button"><b>提交代码</b></button>
+    <button onclick="window.location.href=`P1007-submit.html`" class="button"><b>提交代码</b></button>
     <div class="P1000">
         <div class="useful-box-1">
             <b>
-                输入样例：<br>&nbsp;&nbsp;90
+                输入样例：<br>&nbsp;&nbsp;9<br>&nbsp;&nbsp;5&nbsp;&nbsp;2&nbsp;&nbsp;1&nbsp;&nbsp;5&nbsp;&nbsp;2&nbsp;&nbsp;1&nbsp;&nbsp;5&nbsp;&nbsp;2&nbsp;&nbsp;1
             </b>
         </div>
         <div class="useful-box-2">
             <b>
-                输出样例：<br>&nbsp;&nbsp;0.00000
+                输出样例：<br>&nbsp;&nbsp;6
         </div>
     </div>
 </body>

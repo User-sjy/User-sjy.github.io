@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>星珩</title>
     <style>
+
     .P1000{
         color:#3f3c3c;
     }
@@ -16,15 +17,15 @@
     .button-2{
         border: 2px solid #fc5959;
         background-color: #fc5959;
-        width: 50px;
-        height: 35px;
+        width: 115px;
+        height: auto;
         color:white;
         border-radius: 8px;
     }
     .useful-box-1{
         border: 1px solid #007bff;
-        width: 150px;
-        height: 110px;
+        width: 115px;
+        height: auto;
         padding: 8px;
         background-color: #f8f9fa;
         border-radius: 8px;
@@ -68,17 +69,18 @@
         border-radius: 5px;
         padding: 15px;
     }
+    
     </style>
 </head>
 <body>
     <div class="P1000">
-        <h1>&nbsp;&nbsp;&nbsp;P1014&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cos</h1>
+        <h1>&nbsp;&nbsp;&nbsp;P1003&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;描边</h1>
     </div>
     <hr>
     <div class="nandu-KJ">
         <span style="display: block;" class="nandu">普及</span>
         <p style="display: inline;">
-            <b>DI值：76</b>
+            <b>DI值：65</b>
         </p>
         <button style="border: 0px;" onclick="window.location.href=`question-difficultly.html`">&#8505;&#65039;</button>
     </div>
@@ -86,39 +88,41 @@
         <h2>题目背景：</h2>
         <h3>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            小杨最近学习了三角函数的cos，他想你给他出习题，你能帮帮他吗？
-        </h3>
-        <h2>题目数值：</h2>
-        <h3>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            一个小数x。
+小华有一张坐标纸，上面标记了n个点，这些点按编号顺序依次连接成多边形。
+            现在他想沿着多边形的每条边向外均匀描一条宽度为d的线（忽略转角处的圆弧）。
+            请你计算这条描边的总长度。
         </h3>
         <h2>输入格式：</h2>
         <h3>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            输入一个角度x。
+第一行一个整数n表示多边形顶点数；接下来n行每行两个浮点数xi yi表示
+            第i个顶点的坐标（按顺时针或逆时针顺序，首尾相连形成一个闭合多边形）；
+            接下来一行一个整数m表示需要描边的边数；
+            接下来m行每行两个整数u v，表示需要描边的有向边的起点和终点编号；
+            最后一行一个浮点数d表示描边宽度。
         </h3>
         <h2>输出格式：</h2>
         <h3>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            输出cos x保留五位小数的值。
+一个浮点数，表示描边的总长度，保留5位小数。
+        </h3>
         <h2>数据范围：</h2>
         <h3>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            对于%100的数据，x最多两位小数
+对100%的数据保证：3≤n≤50，|xi|,|yi|≤1000，1≤m≤n，d>0。
         </h3>
         <h2>数据样例:</h2>
     </div>
-    <button onclick="window.location.href=`P1014-submit.html`" class="button"><b>提交代码</b></button>
+    <button onclick="window.location.href=`P1003-submit.html`" class="button"><b>提交代码</b></button>
     <div class="P1000">
         <div class="useful-box-1">
             <b>
-                输入样例：<br>&nbsp;&nbsp;90
+                输入样例：<br>&nbsp;&nbsp;4<br>&nbsp;&nbsp;0&nbsp;&nbsp;0<br>&nbsp;&nbsp;2&nbsp;&nbsp;0<br>&nbsp;&nbsp;4&nbsp;&nbsp;0<br>&nbsp;&nbsp;6&nbsp;&nbsp;0<br>&nbsp;&nbsp;2<br>&nbsp;&nbsp;1&nbsp;&nbsp;2<br>&nbsp;&nbsp;3&nbsp;&nbsp;4<br>&nbsp;&nbsp;0.5
             </b>
         </div>
         <div class="useful-box-2">
             <b>
-                输出样例：<br>&nbsp;&nbsp;0.00000
+                输出样例：<br>&nbsp;&nbsp;5.57080
         </div>
     </div>
 </body>

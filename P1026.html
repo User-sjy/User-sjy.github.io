@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>星珩</title>
     <style>
+
     .P1000{
         color:#3f3c3c;
     }
@@ -24,7 +25,7 @@
     .useful-box-1{
         border: 1px solid #007bff;
         width: 150px;
-        height: 110px;
+        height: auto;
         padding: 8px;
         background-color: #f8f9fa;
         border-radius: 8px;
@@ -68,17 +69,18 @@
         border-radius: 5px;
         padding: 15px;
     }
+    
     </style>
 </head>
 <body>
     <div class="P1000">
-        <h1>&nbsp;&nbsp;&nbsp;P1014&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cos</h1>
+        <h1>&nbsp;&nbsp;&nbsp;P1026&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;弧度转角度练习</h1>
     </div>
     <hr>
     <div class="nandu-KJ">
         <span style="display: block;" class="nandu">普及</span>
         <p style="display: inline;">
-            <b>DI值：76</b>
+            <b>DI值：78</b>
         </p>
         <button style="border: 0px;" onclick="window.location.href=`question-difficultly.html`">&#8505;&#65039;</button>
     </div>
@@ -86,39 +88,35 @@
         <h2>题目背景：</h2>
         <h3>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            小杨最近学习了三角函数的cos，他想你给他出习题，你能帮帮他吗？
-        </h3>
-        <h2>题目数值：</h2>
-        <h3>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            一个小数x。
+小杨在数学课上学习了弧度制，他需要将弧度转换为角度。请帮助他完成计算。
         </h3>
         <h2>输入格式：</h2>
         <h3>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            输入一个角度x。
+第一行一个字符串op表示操作类型（op="RAD to DEG"）；第二行一个浮点数x表示弧度值。
         </h3>
         <h2>输出格式：</h2>
         <h3>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            输出cos x保留五位小数的值。
+输出一个浮点数，保留5位小数，表示角度值。
+        </h3>
         <h2>数据范围：</h2>
         <h3>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            对于%100的数据，x最多两位小数
+对100%的数据保证：|x| &le; 10^9。
         </h3>
         <h2>数据样例:</h2>
     </div>
-    <button onclick="window.location.href=`P1014-submit.html`" class="button"><b>提交代码</b></button>
+    <button onclick="window.location.href=`P1026-submit.html`" class="button"><b>提交代码</b></button>
     <div class="P1000">
         <div class="useful-box-1">
             <b>
-                输入样例：<br>&nbsp;&nbsp;90
+                输入样例：<br>&nbsp;&nbsp;RAD to DEG<br>&nbsp;&nbsp;3.1415927
             </b>
         </div>
         <div class="useful-box-2">
             <b>
-                输出样例：<br>&nbsp;&nbsp;0.00000
+                输出样例：<br>&nbsp;&nbsp;180.00000
         </div>
     </div>
 </body>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>个人主页</title>
+</head>
+<body>
+<script>
+    const Is=localStorage.getItem('Is');
+    if (Is!=='true') {
+        document.write('<h1>你还没有<a href="login.html">登录</a>/<a href="sign.html">注册</a>呢，快去登陆/注册吧！</h1>');
+        localStorage.setItem('Is',false);
+    }else{
+        document.write('<h1>欢迎回来！<script></script></h1>');
+        document.write('<p>这是你的个人主页</p>');
+        localStorage.setItem('Is',true);
+    }
+</script>
+
+</body>
+</html>
